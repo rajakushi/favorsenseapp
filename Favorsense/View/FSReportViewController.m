@@ -19,6 +19,7 @@
 {
     UIPopoverListView *poplistview;
     CLLocation *currentLocation;
+    NSMutableArray *CatArray;
 
     
 }
@@ -42,6 +43,19 @@
     }
     [self.locationManager startUpdatingLocation];
     
+    CatArray  = [NSMutableArray arrayWithObjects:@"Unattended Garbage",
+                     @"Pothole",
+                     @"Drainage Issue",
+                     @"Illegal Parking",
+                     @"Water Leakage",
+                     @"Mosquito Larvae",
+                     @"Rat Infestation",
+                     @"Fallen Tree",
+                     @"Uncut Grass",
+                     @"Faulty Traffic Light",
+                     @"Vandalism",
+                     @"",
+                     nil];
     
 }
 
@@ -76,7 +90,7 @@
     
     
     //  cell.textLabel.text=[NSString stringWithFormat:@"%@ -%@",DeviceEntity.DEVICE_NAME,DeviceEntity.DEVICE_IMEI];
-    cell.textLabel.text=[NSString stringWithFormat:@"%@ %i",@"Category",indexPath.row];
+    cell.textLabel.text=CatArray[indexPath.row];
    // cell.textLabel.font=UICustomFontComFortRegular(14);
     // cell.textLabel.textColor=[UIColor blueColor];
     cell.backgroundColor=[UIColor whiteColor];
@@ -91,7 +105,7 @@
        numberOfRowsInSection:(NSInteger)section
 {
     
-    return 8;
+    return CatArray.count;
 }
 
 #pragma mark - UIPopoverListViewDelegate
@@ -99,7 +113,7 @@
      didSelectIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString* selectedCategory =[NSString stringWithFormat:@"%@ %i",@"Category",indexPath.row];
+    NSString* selectedCategory =CatArray[indexPath.row];
     [_SelectCategoryButton setTitle:selectedCategory forState:normal];
 }
 
@@ -128,7 +142,53 @@
 */
 
 - (IBAction)sumbitReportAction:(id)sender {
-    [self submitReport];
+    NSMutableDictionary *QueryDict=[[NSMutableDictionary alloc]init];
+    [QueryDict setObject:@"favorsense" forKey:@"appid"];
+    //    [QueryDict setObject:UsernameTf.text forKey:@"profile_username"];
+    //    [QueryDict setObject:PasswordTf.text forKey:@"profile_password"];
+    [QueryDict setObject:@"generalCat" forKey:DATA_CATEGORY];
+    [QueryDict setObject:@"manikandan" forKey:DATA_REPORTER];
+    [QueryDict setObject:@"manikandan-t" forKey:DATA_USER_ID];
+    
+    [QueryDict setObject:@"+37.33233141" forKey:DATA_LAT];
+    
+    [QueryDict setObject:@"-122.03121860" forKey:DATA_LNG];
+    
+    [QueryDict setObject:@"APPLE" forKey:DATA_ADDRESS];
+    [QueryDict setObject:@"USA" forKey:DATA_COUNTRY];
+    [QueryDict setObject:@"CA" forKey:DATA_STATE];
+    
+    [QueryDict setObject:@"CUPERTIN" forKey:DATA_CITY];
+    
+    [QueryDict setObject:@"95014" forKey:DATA_POST_CODE];
+    
+    [QueryDict setObject: [self encodeToBase64String:self.reportImage] forKey:DATA_IMAGE];
+    //[QueryDict setObject: @"kzlxbsldfjs"forKey:DATA_IMAGE];
+    
+    [QueryDict setObject:@"MY FIRST COMMENT" forKey:DATA_COMMENT];
+    
+    [HPService HPWebservice:mEnumSendReport getRequest:QueryDict getView:self];
+    
+    
+    /*
+     #define USER_ID         @"userid"
+     #define USER_TOKEN      @"token"
+     #define USER_EMAIL      @"profile_email"
+     #define USER_NAME       @"profile_username"
+     #define APP_ID          @"appid"
+     #define DATA_CATEGORY   @"data_category"
+     #define DATA_REPORTER   @"data_reporter"
+     #define DATA_USER_ID    @"data_userid"
+     #define DATA_LAT        @"data_lat"
+     #define DATA_LNG        @"data_lng"
+     #define DATA_ADDRESS    @"data_address"
+     #define DATA_COUNTRY    @"data_country"
+     #define DATA_STATE      @"data_state"
+     #define DATA_CITY       @"data_city"
+     #define DATA_POST_CODE  @"data_postcode"
+     #define DATA_IMAGE      @"data_image"
+     #define DATA_COMMENT    @"data_comment"
+     */
 }
 
 - (IBAction)cancelReportAction:(id)sender {
@@ -187,58 +247,13 @@
 
 }
 
--(void)submitReport{
-    NSMutableDictionary *QueryDict=[[NSMutableDictionary alloc]init];
-    [QueryDict setObject:@"favorsense" forKey:@"appid"];
-    //    [QueryDict setObject:UsernameTf.text forKey:@"profile_username"];
-    //    [QueryDict setObject:PasswordTf.text forKey:@"profile_password"];
-    [QueryDict setObject:@"generalCat" forKey:DATA_CATEGORY];
-    [QueryDict setObject:@"manikandan" forKey:DATA_REPORTER];
-    [QueryDict setObject:@"manikandan-t" forKey:DATA_USER_ID];
 
-    [QueryDict setObject:@"+37.33233141" forKey:DATA_LAT];
-
-    [QueryDict setObject:@"-122.03121860" forKey:DATA_LNG];
-
-    [QueryDict setObject:@"APPLE" forKey:DATA_ADDRESS];
-    [QueryDict setObject:@"USA" forKey:DATA_COUNTRY];
-    [QueryDict setObject:@"CA" forKey:DATA_STATE];
-
-    [QueryDict setObject:@"CUPERTIN" forKey:DATA_CITY];
-
-    [QueryDict setObject:@"95014" forKey:DATA_POST_CODE];
-
-    [QueryDict setObject: [self encodeToBase64String:self.reportImage] forKey:DATA_IMAGE];
-    //[QueryDict setObject: @"kzlxbsldfjs"forKey:DATA_IMAGE];
-
-    [QueryDict setObject:@"MY FIRST COMMENT" forKey:DATA_COMMENT];
-
-    [HPService HPWebservice:mEnumSendReport getRequest:QueryDict getView:self];
-
-
- /*
-#define USER_ID         @"userid"
-#define USER_TOKEN      @"token"
-#define USER_EMAIL      @"profile_email"
-#define USER_NAME       @"profile_username"
-#define APP_ID          @"appid"
-#define DATA_CATEGORY   @"data_category"
-#define DATA_REPORTER   @"data_reporter"
-#define DATA_USER_ID    @"data_userid"
-#define DATA_LAT        @"data_lat"
-#define DATA_LNG        @"data_lng"
-#define DATA_ADDRESS    @"data_address"
-#define DATA_COUNTRY    @"data_country"
-#define DATA_STATE      @"data_state"
-#define DATA_CITY       @"data_city"
-#define DATA_POST_CODE  @"data_postcode"
-#define DATA_IMAGE      @"data_image"
-#define DATA_COMMENT    @"data_comment"
-*/
-}
 
 - (NSString *)encodeToBase64String:(UIImage *)image {
-    return [UIImagePNGRepresentation(image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    return [UIImageJPEGRepresentation(image,0.5) base64EncodedStringWithOptions:0];
+
+ //raja comment kushi   return [UIImagePNGRepresentation(image)  base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
 
 -(void)receivedReportResponse:(id)sender
@@ -253,16 +268,9 @@
         }
         else
         {
-            [HPPrefence HPUserData:sender];
+           // [HPPrefence HPUserData:sender]; // this line only for saving userdata
             
-          /*  UIWindow* window = [UIApplication sharedApplication].keyWindow;
-            if (!window) {
-                window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-            }
-            TabBarViewController *tabBarVC = [TabBarViewController new];
-            
-            window.rootViewController = tabBarVC;
-           */
+         
         }
         
         
