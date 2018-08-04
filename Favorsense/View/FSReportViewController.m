@@ -195,12 +195,41 @@
 }
 
 - (IBAction)takePhoto:(id)sender {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Image from" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [self presentViewController:picker animated:YES completion:nil];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+        // Cancel button tappped.
+        
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Gallery" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        
+        UIImagePickerController *picker;
+        picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+        
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        // OK button tapped.
+        
+        UIImagePickerController *picker;
+        picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+        
+    }]];
+    // Present action sheet.
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {

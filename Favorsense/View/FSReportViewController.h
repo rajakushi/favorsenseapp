@@ -11,7 +11,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface FSReportViewController : UIViewController<CLLocationManagerDelegate>
+@interface FSReportViewController : UIViewController<CLLocationManagerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *Submit;
 @property (strong, nonatomic) IBOutlet UIButton *Cancel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
