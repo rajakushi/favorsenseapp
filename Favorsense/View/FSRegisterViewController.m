@@ -36,7 +36,8 @@
     [QueryDict setObject:PasswordTf.text forKey:@"profile_password"];
     [QueryDict setObject:EmailTf.text forKey:@"profile_email"];
     
-    [HPService HPWebservice:mEnumRegisterURL getRequest:QueryDict getView:self];
+    [HPService HPWebservice:mEnumRegisterURL getJsonDict:QueryDict getView:self];
+
     
 }
 

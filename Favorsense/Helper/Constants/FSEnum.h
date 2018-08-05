@@ -19,7 +19,8 @@ typedef enum
     mEnumForgotURL,
     mEnumMyProfile,
     mEnumForgotPassword,
-    mEnumSendReport
+    mEnumSendReport,
+    mEnumGetReports
 }mKMEnum;
 
 #endif /* FSEnum_h */

@@ -42,6 +42,9 @@
 #define DATA_IMAGE      @"data_image"
 #define DATA_COMMENT    @"data_comment"
 
+#define HTTP_POST       @"POST"
+#define HTTP_GET        @"GET"
+
 /*
  "appid"
  "data_category"

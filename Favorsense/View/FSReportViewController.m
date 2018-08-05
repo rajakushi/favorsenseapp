@@ -167,7 +167,9 @@
     
     [QueryDict setObject:@"MY FIRST COMMENT" forKey:DATA_COMMENT];
     
-    [HPService HPWebservice:mEnumSendReport getRequest:QueryDict getView:self];
+    
+    [HPService HPWebservice:mEnumSendReport getJsonDict:QueryDict getView:self];
+
     
     
     /*

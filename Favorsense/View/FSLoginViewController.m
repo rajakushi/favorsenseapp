@@ -29,7 +29,8 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden=YES;
     
-    
+    UsernameTf.text=@"rajajimsen";
+    PasswordTf.text=@"123456";
 
     // Do any additional setup after loading the view.
 }
@@ -39,14 +40,16 @@
     
     NSMutableDictionary *QueryDict=[[NSMutableDictionary alloc]init];
     [QueryDict setObject:@"favorsense" forKey:@"appid"];
-//    [QueryDict setObject:UsernameTf.text forKey:@"profile_username"];
-//    [QueryDict setObject:PasswordTf.text forKey:@"profile_password"];
-    [QueryDict setObject:@"manikandan-t" forKey:@"profile_username"];
-    [QueryDict setObject:@"9095588528" forKey:@"profile_password"];
+    [QueryDict setObject:UsernameTf.text forKey:@"profile_username"];
+    [QueryDict setObject:PasswordTf.text forKey:@"profile_password"];
+ 
 
     
-    [HPService HPWebservice:mEnumLoginURL getRequest:QueryDict getView:self];
+    [HPService HPWebservice:mEnumLoginURL getJsonDict:QueryDict getView:self];
     
+    
+    
+
     
     /*
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
